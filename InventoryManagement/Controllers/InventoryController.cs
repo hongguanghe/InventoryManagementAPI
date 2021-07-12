@@ -24,10 +24,10 @@ namespace InventoryManagement.Controllers
         }
 
         [HttpGet("all", Name = "All Items")]
-        public async IEnumerable<Product> GetAllItems ()
+        public IEnumerable<Product> GetAllProducts ()
         {
-
-            return Ok();
+            var products = new List<Product>();
+            return products;
         }
     }
 }

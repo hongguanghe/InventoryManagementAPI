@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using InventoryManagement.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,7 @@ namespace InventoryManagement.Data
         }
 
         public DbSet<Product> Products { get; set; }
+        public DbSet<Batch> Batches { get; set; }
+
     }
 }
