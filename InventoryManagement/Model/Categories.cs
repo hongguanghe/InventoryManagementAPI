@@ -7,6 +7,11 @@ namespace InventoryManagement.Model
 {
     public enum Categories
     {
-        // copy from amazon
+        Fashinon,
+        Electronics,
+        Home,
+        Pet,
+        Outdoor,
+        Beauty
     }
 }
