@@ -12,6 +12,7 @@ namespace InventoryManagement.Model
         Home,
         Pet,
         Outdoor,
-        Beauty
+        Beauty,
+        Other
     }
 }

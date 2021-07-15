@@ -1,4 +1,5 @@
 using InventoryManagement.Data;
+using InventoryManagement.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -30,6 +31,7 @@ namespace InventoryManagement
         {
             services.AddDbContext<ApplicationDBContext> (options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddTransient<IProductService, ProductService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
