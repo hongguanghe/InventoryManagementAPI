@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using InventoryManagement.Data.Entities;
+using InventoryManagement.Services.DTOs;
 
 namespace InventoryManagement.Services
 {
@@ -14,9 +16,29 @@ namespace InventoryManagement.Services
         {
             _db = db;
         }
-        public async Task CreateProduct(Product product)
+        public async Task CreateProduct(ProductDTO product)
         {
-            await _db.Products.AddAsync(product);
+            var productToDB = new Product
+            {
+                Name = product.Name,
+                Batches = product.Batches.Select(x => new Batch
+                {
+                    Cost = x.Cost,
+                    ExpirationDate = x.ExpirationDate,
+                    Location =  x.Location,
+                    Manufacturer = x.Manufacturer,
+                    PurchasedDate = x.PurchasedDate,
+                    Quantities = x.Quantities
+                }).ToList(),
+                Brand = product.Brand,
+                Category = product.Category,
+                OnSale = product.OnSale,
+                Price = product.Price,
+                Location = product.Location,
+                Quantities = product.Quantities
+            };
+            
+            await _db.Products.AddAsync(productToDB);
             await _db.SaveChangesAsync();
         }
 
@@ -33,19 +55,19 @@ namespace InventoryManagement.Services
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<Product>> GetAllProducts()
+        public async Task<IEnumerable<ProductDTO>> GetAllProducts()
         {
-            return await _db.Products.ToArrayAsync();
+            return await _db.Products.ToList();
         }
 
-        public async Task<Product> GetProductById(int Id)
+        public async Task<ProductDTO> GetProductById(int Id)
         {
             return await _db.Products.FindAsync(Id);
         }
 
         public async Task<bool> ProductExistsById(int Id)
         {
-            return await _db.Products.Where(p => p.Id == Id).AnyAsync();
+            return await _db.Products.Where(p => p.ProductId == Id).AnyAsync();
         }
 
         public async Task<bool> ProductExistsByName(string Name)
@@ -53,8 +75,9 @@ namespace InventoryManagement.Services
             return await _db.Products.Where(p => p.Name == Name).AnyAsync();
         }
 
-        public async Task UpdateProduct(Product product)
+        public async Task UpdateProduct(ProductDTO product)
         {
+            
             _db.Products.Update(product);
             await _db.SaveChangesAsync();
         }

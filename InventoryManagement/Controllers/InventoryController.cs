@@ -1,11 +1,12 @@
 ﻿using InventoryManagement.Data;
-using InventoryManagement.Model;
 using InventoryManagement.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using InventoryManagement.Controllers.Models;
+using InventoryManagement.Data.Entities;
 
 namespace InventoryManagement.Controllers
 {
@@ -25,14 +26,18 @@ namespace InventoryManagement.Controllers
         }
 
         [HttpGet("products/all", Name = "All Products")]
-        public Task<IEnumerable<Product>> GetAllProducts()
+        public async Task<IEnumerable<ProductResponse>> GetAllProducts()
         {
-            return _productService.GetAllProducts();
+            // TODO: RETURN PRODUCTRESPONSE
+            // GET THE RESPONSE FROM THE SERVICE AND MAP IT TO PRODUCT RESPONSE
+            return await _productService.GetAllProducts();
         }
 
         [HttpGet("products/product/{Id}", Name = "One Product")]
         public async Task<Product> GetProductById(int Id)
         {
+            // TODO: RETURN PRODUCTRESPONSE
+            // GET THE RESPONSE FROM THE SERVICE AND MAP IT TO PRODUCT RESPONSE
             return await _productService.GetProductById(Id);
         }
 
