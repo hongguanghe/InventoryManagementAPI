@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using InventoryManagement.Controllers.Models;
 using InventoryManagement.Data.Entities;
@@ -27,38 +28,38 @@ namespace InventoryManagement.Controllers
         }
 
         [HttpGet("products/all", Name = "All Products")]
-        public async Task<IEnumerable<ProductResponse>> GetAllProducts()
+        public async Task<ProductsResponse> GetAllProducts()
         {
-            // TODO: RETURN PRODUCTRESPONSE
-            // GET THE RESPONSE FROM THE SERVICE AND MAP IT TO PRODUCT RESPONSE
-            return await _productService.GetAllProducts();
+            var allProductDto = await _productService.GetAllProducts();
+
+            return new ProductsResponse
+            {
+                Products = allProductDto.ToList()
+            };
         }
 
-        [HttpGet("products/product/{Id}", Name = "One Product")]
-        public async Task<Product> GetProductById(int Id)
+        [HttpGet("products/product/{id}", Name = "One Product")]
+        public async Task<ProductResponse> GetProductById(int id)
         {
-            // TODO: RETURN PRODUCTRESPONSE
-            // GET THE RESPONSE FROM THE SERVICE AND MAP IT TO PRODUCT RESPONSE
-            return await _productService.GetProductById(Id);
+            var productDto = await _productService.GetProductById(id);
+            return ConvertDTO(productDto);
         }
 
-        [HttpDelete("products/product/{Id}", Name ="Delete Product")]
-        public async Task<ActionResult> DeleteProduct(int Id)
+        [HttpDelete("products/product/{id}", Name ="Delete Product")]
+        public async Task<ActionResult> DeleteProduct(int id)
         {
-            await _productService.DeleteProduct(Id);
+            await _productService.DeleteProduct(id);
             return Ok();
         }
 
         [HttpPost("products/demo", Name = "Add Demo")]
         public async Task<ActionResult> LoadDemoData()
         {
-            //await _productService.ClearDatabase();
             var demoProducts = new List<ProductDTO>();
 
             // ------------------Product 1 -------------------
             var product1 = new ProductDTO
             {
-                //Id = Guid.NewGuid().ToString(),
                 Name = "Pods Spring Meadow 96 Ct, Laundry Detergent Pacs",
                 Brand = "Tide",
                 Category = "Detergents",
@@ -75,7 +76,6 @@ namespace InventoryManagement.Controllers
                 Manufacturer = "Tide Inc.",
                 PurchasedDate = new System.DateTime(),
                 ExpirationDate = new System.DateTime(2025, 5, 1),
-                //AssociatedProductId = 10
             };
 
             var batch2List1 = new BatchDTO
@@ -85,7 +85,6 @@ namespace InventoryManagement.Controllers
                 Manufacturer = "Tide Inc.",
                 PurchasedDate = new System.DateTime(),
                 ExpirationDate = new System.DateTime(2025, 5, 6),
-                //AssociatedProductId = 10
             };
 
             var batch3List1 = new BatchDTO
@@ -95,7 +94,6 @@ namespace InventoryManagement.Controllers
                 Manufacturer = "Tide Inc.",
                 PurchasedDate = new System.DateTime(),
                 ExpirationDate = new System.DateTime(2025, 5, 25),
-                //AssociatedProductId = 10
             };
             batchesList1.Add(batch1List1);
             batchesList1.Add(batch2List1);
@@ -106,7 +104,6 @@ namespace InventoryManagement.Controllers
             // ------------------Product 2 -------------------
             var product2 = new ProductDTO
             {
-                //Id = Guid.NewGuid().ToString(),
                 Name = "Plastic Set of(4) 12 Qt.Storage Boxes Blush Pink",
                 Brand = "Sterilite",
                 Category = "Kitchen",
@@ -123,7 +120,6 @@ namespace InventoryManagement.Controllers
                 Manufacturer = "Sterilite Company",
                 PurchasedDate = new System.DateTime(2015, 5, 1),
                 ExpirationDate = new System.DateTime(2025, 8, 1),
-                //AssociatedProductId = 15
             };
 
             var batch2List2 = new BatchDTO
@@ -132,7 +128,6 @@ namespace InventoryManagement.Controllers
                 Manufacturer = "Sterilite Company",
                 PurchasedDate = new System.DateTime(2016, 12, 8),
                 ExpirationDate = new System.DateTime(2028, 8, 8),
-                //AssociatedProductId = 15
             };
 
             batchesList2.Add(batch1List2);
@@ -143,7 +138,6 @@ namespace InventoryManagement.Controllers
             // ------------------Product 3 -------------------
             var product3 = new ProductDTO
             {
-                //Id = Guid.NewGuid().ToString(),
                 Name = "Comfort Wireless Combo Keyboard and Mouse",
                 Brand = "Logitech",
                 Category = "Electronics",
@@ -160,7 +154,6 @@ namespace InventoryManagement.Controllers
                 Manufacturer = "Logitech Inc",
                 PurchasedDate = new System.DateTime(2008, 5, 1),
                 ExpirationDate = new System.DateTime(2012, 8, 1),
-                //AssociatedProductId = 16
             };
 
             var batch2List3 = new BatchDTO
@@ -170,7 +163,6 @@ namespace InventoryManagement.Controllers
                 Manufacturer = "Logitech Inc",
                 PurchasedDate = new System.DateTime(2012, 12, 8),
                 ExpirationDate = new System.DateTime(2022, 8, 8),
-                //AssociatedProductId = 16
             };
 
             var batch3List3 = new BatchDTO
@@ -180,7 +172,6 @@ namespace InventoryManagement.Controllers
                 Manufacturer = "Logitech Inc",
                 PurchasedDate = new System.DateTime(2018, 1, 8),
                 ExpirationDate = new System.DateTime(2020, 3, 28),
-                //AssociatedProductId = 16
             };
 
             var batch4List3 = new BatchDTO
@@ -190,7 +181,6 @@ namespace InventoryManagement.Controllers
                 Manufacturer = "Logitech Inc",
                 PurchasedDate = new System.DateTime(2020, 7, 5),
                 ExpirationDate = new System.DateTime(2028, 8, 15),
-                //AssociatedProductId = 16
             };
 
             batchesList2.Add(batch1List3);
@@ -208,9 +198,27 @@ namespace InventoryManagement.Controllers
             return Ok();
         }
 
-        private ProductResponse ConvertDTO(ProductDTO productDto)
+        private ProductResponse ConvertDTO(Product productDto)
         {
-            return null;
+            return new ProductResponse
+            {
+                Name = productDto.Name,
+                Brand = productDto.Brand,
+                Category = productDto.Category,
+                Location = productDto.Location,
+                OnSale = productDto.OnSale,
+                ProductId = productDto.ProductId,
+                Price = productDto.Price,
+                Quantities = productDto.Quantities,
+                Batches = productDto.Batches.Select(x => new Batch
+                {
+                    Cost = x.Cost,
+                    ExpirationDate = x.ExpirationDate,
+                    Manufacturer = x.Manufacturer,
+                    PurchasedDate = x.PurchasedDate,
+                    Quantities = x.Quantities
+                }).ToList(),
+            };
         }
     }
 }
