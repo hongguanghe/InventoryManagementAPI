@@ -18,25 +18,6 @@ namespace InventoryManagement.Services
         }
         public async Task CreateProduct(ProductDTO product)
         {
-            var productToDb = new Product
-            {
-                Name = product.Name,
-                Batches = product.Batches.Select(x => new Batch
-                {
-                    Cost = x.Cost,
-                    ExpirationDate = x.ExpirationDate,
-                    Manufacturer = x.Manufacturer,
-                    PurchasedDate = x.PurchasedDate,
-                    Quantities = x.Quantities
-                }).ToList(),
-                Brand = product.Brand,
-                Category = product.Category,
-                OnSale = product.OnSale,
-                Price = product.Price,
-                Location = product.Location,
-                Quantities = product.Quantities
-            };
-            
             await _db.Products.AddAsync(productToDB);
             await _db.SaveChangesAsync();
         }
@@ -86,5 +67,8 @@ namespace InventoryManagement.Services
             _db.RemoveRange(_db.Products.ToArrayAsync());
             await _db.SaveChangesAsync();
         }
+        
+        
+        
     }
 }

@@ -75,7 +75,6 @@ namespace InventoryManagement.Controllers
                 Manufacturer = "Tide Inc.",
                 PurchasedDate = new System.DateTime(),
                 ExpirationDate = new System.DateTime(2025, 5, 1),
-                Location = "B2",
                 //AssociatedProductId = 10
             };
 
@@ -86,7 +85,6 @@ namespace InventoryManagement.Controllers
                 Manufacturer = "Tide Inc.",
                 PurchasedDate = new System.DateTime(),
                 ExpirationDate = new System.DateTime(2025, 5, 6),
-                Location = "B2",
                 //AssociatedProductId = 10
             };
 
@@ -97,7 +95,6 @@ namespace InventoryManagement.Controllers
                 Manufacturer = "Tide Inc.",
                 PurchasedDate = new System.DateTime(),
                 ExpirationDate = new System.DateTime(2025, 5, 25),
-                Location = "B3",
                 //AssociatedProductId = 10
             };
             batchesList1.Add(batch1List1);
@@ -127,7 +124,6 @@ namespace InventoryManagement.Controllers
                 Manufacturer = "Sterilite Company",
                 PurchasedDate = new System.DateTime(2015, 5, 1),
                 ExpirationDate = new System.DateTime(2025, 8, 1),
-                Location = "A2"
                 //AssociatedProductId = 15
             };
 
@@ -138,7 +134,6 @@ namespace InventoryManagement.Controllers
                 Manufacturer = "Sterilite Company",
                 PurchasedDate = new System.DateTime(2016, 12, 8),
                 ExpirationDate = new System.DateTime(2028, 8, 8),
-                Location = "A2"
                 //AssociatedProductId = 15
             };
 
@@ -168,7 +163,6 @@ namespace InventoryManagement.Controllers
                 Manufacturer = "Logitech Inc",
                 PurchasedDate = new System.DateTime(2008, 5, 1),
                 ExpirationDate = new System.DateTime(2012, 8, 1),
-                Location = "C6"
                 //AssociatedProductId = 16
             };
 
@@ -179,7 +173,6 @@ namespace InventoryManagement.Controllers
                 Manufacturer = "Logitech Inc",
                 PurchasedDate = new System.DateTime(2012, 12, 8),
                 ExpirationDate = new System.DateTime(2022, 8, 8),
-                Location = "C6"
                 //AssociatedProductId = 16
             };
 
@@ -190,7 +183,6 @@ namespace InventoryManagement.Controllers
                 Manufacturer = "Logitech Inc",
                 PurchasedDate = new System.DateTime(2018, 1, 8),
                 ExpirationDate = new System.DateTime(2020, 3, 28),
-                Location = "C7"
                 //AssociatedProductId = 16
             };
 
@@ -201,7 +193,6 @@ namespace InventoryManagement.Controllers
                 Manufacturer = "Logitech Inc",
                 PurchasedDate = new System.DateTime(2020, 7, 5),
                 ExpirationDate = new System.DateTime(2028, 8, 15),
-                Location = "C7"
                 //AssociatedProductId = 16
             };
 
