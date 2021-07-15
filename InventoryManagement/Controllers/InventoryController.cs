@@ -60,11 +60,10 @@ namespace InventoryManagement.Controllers
                 //Id = Guid.NewGuid().ToString(),
                 Name = "Pods Spring Meadow 96 Ct, Laundry Detergent Pacs",
                 Brand = "Tide",
-                Category = 2,
+                Category = "Detergents",
                 Price = 21.44,
                 OnSale = true,
                 Location = "A1",
-                Quantities = 500
             };
 
             var batchesList1 = new List<Batch>();
@@ -109,11 +108,10 @@ namespace InventoryManagement.Controllers
                 //Id = Guid.NewGuid().ToString(),
                 Name = "Plastic Set of(4) 12 Qt.Storage Boxes Blush Pink",
                 Brand = "Sterilite",
-                Category = 1,
+                Category = "Kitchen",
                 Price = 8.00,
                 OnSale = false,
                 Location = "C5",
-                Quantities = 200
             };
 
             var batchesList2 = new List<Batch>();
@@ -129,7 +127,6 @@ namespace InventoryManagement.Controllers
 
             var batch2List2 = new Batch
             {
-                Quantities = 100,
                 Cost = 12.55,
                 Manufacturer = "Sterilite Company",
                 PurchasedDate = new System.DateTime(2016, 12, 8),
@@ -148,11 +145,10 @@ namespace InventoryManagement.Controllers
                 //Id = Guid.NewGuid().ToString(),
                 Name = "Comfort Wireless Combo Keyboard and Mouse",
                 Brand = "Logitech",
-                Category = 5,
+                Category = "Electronics",
                 Price = 48.88,
                 OnSale = true,
                 Location = "E2",
-                Quantities = 50
             };
 
             var batchesList3 = new List<Batch>();
