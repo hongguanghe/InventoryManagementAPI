@@ -35,12 +35,12 @@ namespace InventoryManagement.Services
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<ProductDTO>> GetAllProducts()
+        public async Task<IEnumerable<Product>> GetAllProducts()
         {
-            return await _db.Products.ToList();
+            return await _db.Products.ToListAsync();
         }
 
-        public async Task<ProductDTO> GetProductById(int id)
+        public async Task<Product> GetProductById(int id)
         {
             return await _db.Products.FindAsync(id);
         }
