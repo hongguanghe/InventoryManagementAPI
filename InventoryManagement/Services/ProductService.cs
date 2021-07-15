@@ -18,14 +18,13 @@ namespace InventoryManagement.Services
         }
         public async Task CreateProduct(ProductDTO product)
         {
-            var productToDB = new Product
+            var productToDb = new Product
             {
                 Name = product.Name,
                 Batches = product.Batches.Select(x => new Batch
                 {
                     Cost = x.Cost,
                     ExpirationDate = x.ExpirationDate,
-                    Location =  x.Location,
                     Manufacturer = x.Manufacturer,
                     PurchasedDate = x.PurchasedDate,
                     Quantities = x.Quantities
@@ -50,7 +49,7 @@ namespace InventoryManagement.Services
 
         }
 
-        public Task DeleteProduct(int Id)
+        public Task DeleteProduct(int id)
         {
             throw new NotImplementedException();
         }
@@ -60,19 +59,19 @@ namespace InventoryManagement.Services
             return await _db.Products.ToList();
         }
 
-        public async Task<ProductDTO> GetProductById(int Id)
+        public async Task<ProductDTO> GetProductById(int id)
         {
-            return await _db.Products.FindAsync(Id);
+            return await _db.Products.FindAsync(id);
         }
 
-        public async Task<bool> ProductExistsById(int Id)
+        public async Task<bool> ProductExistsById(int id)
         {
-            return await _db.Products.Where(p => p.ProductId == Id).AnyAsync();
+            return await _db.Products.Where(p => p.ProductId == id).AnyAsync();
         }
 
-        public async Task<bool> ProductExistsByName(string Name)
+        public async Task<bool> ProductExistsByName(string name)
         {
-            return await _db.Products.Where(p => p.Name == Name).AnyAsync();
+            return await _db.Products.Where(p => p.Name == name).AnyAsync();
         }
 
         public async Task UpdateProduct(ProductDTO product)
