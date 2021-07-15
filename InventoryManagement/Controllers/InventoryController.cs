@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using InventoryManagement.Controllers.Models;
 using InventoryManagement.Data.Entities;
+using InventoryManagement.Services.DTOs;
 
 namespace InventoryManagement.Controllers
 {
@@ -52,10 +53,10 @@ namespace InventoryManagement.Controllers
         public async Task<ActionResult> LoadDemoData()
         {
             //await _productService.ClearDatabase();
-            var demoProducts = new List<Product>();
+            var demoProducts = new List<ProductDTO>();
 
             // ------------------Product 1 -------------------
-            var product1 = new Product
+            var product1 = new ProductDTO
             {
                 //Id = Guid.NewGuid().ToString(),
                 Name = "Pods Spring Meadow 96 Ct, Laundry Detergent Pacs",
@@ -66,8 +67,8 @@ namespace InventoryManagement.Controllers
                 Location = "A1",
             };
 
-            var batchesList1 = new List<Batch>();
-            var batch1List1 = new Batch
+            var batchesList1 = new List<BatchDTO>();
+            var batch1List1 = new BatchDTO
             {
                 Quantities = 100,
                 Cost = 9.88,
@@ -77,7 +78,7 @@ namespace InventoryManagement.Controllers
                 //AssociatedProductId = 10
             };
 
-            var batch2List1 = new Batch
+            var batch2List1 = new BatchDTO
             {
                 Quantities = 100,
                 Cost = 12.55,
@@ -87,7 +88,7 @@ namespace InventoryManagement.Controllers
                 //AssociatedProductId = 10
             };
 
-            var batch3List1 = new Batch
+            var batch3List1 = new BatchDTO
             {
                 Quantities = 300,
                 Cost = 18.55,
@@ -103,7 +104,7 @@ namespace InventoryManagement.Controllers
             demoProducts.Add(product1);
 
             // ------------------Product 2 -------------------
-            var product2 = new Product
+            var product2 = new ProductDTO
             {
                 //Id = Guid.NewGuid().ToString(),
                 Name = "Plastic Set of(4) 12 Qt.Storage Boxes Blush Pink",
@@ -114,8 +115,8 @@ namespace InventoryManagement.Controllers
                 Location = "C5",
             };
 
-            var batchesList2 = new List<Batch>();
-            var batch1List2 = new Batch
+            var batchesList2 = new List<BatchDTO>();
+            var batch1List2 = new BatchDTO
             {
                 Quantities = 100,
                 Cost = 9.88,
@@ -125,7 +126,7 @@ namespace InventoryManagement.Controllers
                 //AssociatedProductId = 15
             };
 
-            var batch2List2 = new Batch
+            var batch2List2 = new BatchDTO
             {
                 Cost = 12.55,
                 Manufacturer = "Sterilite Company",
@@ -140,7 +141,7 @@ namespace InventoryManagement.Controllers
             demoProducts.Add(product2);
 
             // ------------------Product 3 -------------------
-            var product3 = new Product
+            var product3 = new ProductDTO
             {
                 //Id = Guid.NewGuid().ToString(),
                 Name = "Comfort Wireless Combo Keyboard and Mouse",
@@ -151,8 +152,8 @@ namespace InventoryManagement.Controllers
                 Location = "E2",
             };
 
-            var batchesList3 = new List<Batch>();
-            var batch1List3 = new Batch
+            var batchesList3 = new List<BatchDTO>();
+            var batch1List3 = new BatchDTO
             {
                 Quantities = 30,
                 Cost = 38.00,
@@ -162,7 +163,7 @@ namespace InventoryManagement.Controllers
                 //AssociatedProductId = 16
             };
 
-            var batch2List3 = new Batch
+            var batch2List3 = new BatchDTO
             {
                 Quantities = 10,
                 Cost = 35.00,
@@ -172,7 +173,7 @@ namespace InventoryManagement.Controllers
                 //AssociatedProductId = 16
             };
 
-            var batch3List3 = new Batch
+            var batch3List3 = new BatchDTO
             {
                 Quantities = 5,
                 Cost = 32.66,
@@ -182,7 +183,7 @@ namespace InventoryManagement.Controllers
                 //AssociatedProductId = 16
             };
 
-            var batch4List3 = new Batch
+            var batch4List3 = new BatchDTO
             {
                 Quantities = 5,
                 Cost = 49.55,
@@ -207,5 +208,9 @@ namespace InventoryManagement.Controllers
             return Ok();
         }
 
+        private ProductResponse ConvertDTO(ProductDTO productDto)
+        {
+            return null;
+        }
     }
 }
