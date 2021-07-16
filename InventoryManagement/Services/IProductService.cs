@@ -14,7 +14,8 @@ namespace InventoryManagement.Services
         Task<ProductDTO> GetProductById(int id);
         Task<bool> ProductExistsById(int id);
         Task<bool> ProductExistsByName(string name);
-        Task DeleteProduct(int id);
+        // Task DeleteProduct(int id);
+        Task DeleteProduct(ProductDTO product);
         Task CreateProduct(ProductDTO product);
         Task UpdateProduct(ProductDTO product);
         Task ClearDatabase();

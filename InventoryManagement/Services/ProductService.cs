@@ -22,18 +22,19 @@ namespace InventoryManagement.Services
             await _db.SaveChangesAsync();
         }
 
-        public async Task DeleteProduct(Product product)
+        public async Task DeleteProduct(ProductDTO product)
         {
             // TODO: DELETE BATCHES AS WELL
-            _db.Products.Remove(product);
+            _db.Products.Remove(ProductToDb(product));
             await _db.SaveChangesAsync();
-
         }
 
-        public Task DeleteProduct(int id)
-        {
-            throw new NotImplementedException();
-        }
+        // public Task DeleteProduct(int id)
+        // {
+        //     var product = await _db.Products.FindAsync(id);
+        //     _db.Products.Remove(product);
+        //
+        // }
 
         public async Task<IEnumerable<ProductDTO>> GetAllProducts()
         {

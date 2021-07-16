@@ -53,13 +53,13 @@ namespace InventoryManagement.Controllers
         }
 
         [HttpDelete("products/product/{id}", Name ="Delete Product")]
-        public async Task<ActionResult> DeleteProduct(int id)
+        public async Task<ActionResult> DeleteProduct(ProductDTO productDto)
         {
-            if (!await _productService.ProductExistsById(id))
+            if (!await _productService.ProductExistsById(productDto.ProductId))
             {
                 return NotFound();
             }
-            await _productService.DeleteProduct(id);
+            await _productService.DeleteProduct(productDto);
             return Ok();        
         }
 
