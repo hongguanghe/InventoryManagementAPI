@@ -10,8 +10,8 @@ namespace InventoryManagement.Services
 {
     public interface IProductService
     {
-        Task<IEnumerable<Product>> GetAllProducts();
-        Task<Product> GetProductById(int id);
+        Task<IEnumerable<ProductDTO>> GetAllProducts();
+        Task<ProductDTO> GetProductById(int id);
         Task<bool> ProductExistsById(int id);
         Task<bool> ProductExistsByName(string name);
         Task DeleteProduct(int id);
@@ -19,5 +19,6 @@ namespace InventoryManagement.Services
         Task UpdateProduct(ProductDTO product);
         Task ClearDatabase();
         Product ProductToDb(ProductDTO product);
+        ProductDTO ProductToDto(Product product);
     }
 }

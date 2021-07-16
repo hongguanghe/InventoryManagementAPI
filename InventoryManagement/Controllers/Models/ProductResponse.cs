@@ -15,7 +15,7 @@ namespace InventoryManagement.Controllers.Models
         public string Location { get; set; }
         public int Quantities { get; set; }
         public double Cost { get; set; }
-        public List<Batch> Batches { get; set; }
+        public List<BatchDTO> Batches { get; set; }
         // BATCH(Probably) OR BATCHDTO? 
     }
 }

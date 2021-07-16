@@ -35,14 +35,23 @@ namespace InventoryManagement.Services
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<Product>> GetAllProducts()
+        public async Task<IEnumerable<ProductDTO>> GetAllProducts()
         {
-            return await _db.Products.ToListAsync();
+            var allProducts = await _db.Products.ToListAsync();
+            var dtoProducts = new List<ProductDTO>();
+
+            foreach (var product in allProducts)
+            {
+                dtoProducts.Add(ProductToDto(product));
+            }
+
+            return dtoProducts;
         }
 
-        public async Task<Product> GetProductById(int id)
+        public async Task<ProductDTO> GetProductById(int id)
         {
-            return await _db.Products.FindAsync(id);
+            var product = await _db.Products.FindAsync(id);
+            return ProductToDto(product);
         }
 
         public async Task<bool> ProductExistsById(int id)
@@ -86,6 +95,28 @@ namespace InventoryManagement.Services
                 Price = product.Price,
                 Location = product.Location,
                 Quantities = product.Quantities
+            };
+        }
+
+        public ProductDTO ProductToDto(Product product)
+        {
+            return new ProductDTO
+            {
+                Batches = product.Batches.Select(x => new BatchDTO()
+                {
+                    Cost = x.Cost,
+                    ExpirationDate = x.ExpirationDate,
+                    Manufacturer = x.Manufacturer,
+                    PurchasedDate = x.PurchasedDate,
+                    Quantities = x.Quantities
+                }).ToList(),
+                Brand = product.Brand,
+                Category = product.Category,
+                OnSale = product.OnSale,
+                Price = product.Price,
+                Location = product.Location,
+                ProductId = product.ProductId,
+                Name = product.Name
             };
         }
     }

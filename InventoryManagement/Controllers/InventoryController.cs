@@ -196,7 +196,7 @@ namespace InventoryManagement.Controllers
             return Ok();
         }
 
-        private ProductResponse ConvertDTO(Product productDto)
+        private ProductResponse ConvertDTO(ProductDTO productDto)
         {
             return new ProductResponse
             {
@@ -208,14 +208,14 @@ namespace InventoryManagement.Controllers
                 ProductId = productDto.ProductId,
                 Price = productDto.Price,
                 Quantities = productDto.Quantities,
-                Batches = productDto.Batches.Select(x => new Batch
+                Batches = productDto.Batches.Select(x => new BatchDTO
                 {
                     Cost = x.Cost,
                     ExpirationDate = x.ExpirationDate,
                     Manufacturer = x.Manufacturer,
                     PurchasedDate = x.PurchasedDate,
                     Quantities = x.Quantities
-                }).ToList(),
+                }).ToList()
             };
         }
     }
