@@ -28,9 +28,9 @@ namespace InventoryManagement.Services
             throw new System.NotImplementedException();
         }
 
-        public Task<bool> BatchExistsById(int id)
+        public async Task<bool> BatchExistsById(int id)
         {
-            throw new System.NotImplementedException();
+            return await _db.Batches.Where(p => p.BatchId == id).AnyAsync();
         }
 
         public Task DeleteBatchById(int id)
@@ -38,9 +38,10 @@ namespace InventoryManagement.Services
             throw new System.NotImplementedException();
         }
 
-        public Task DeleteBatch(BatchDTO batch)
+        public async Task DeleteBatch(BatchDTO batch)
         {
-            throw new System.NotImplementedException();
+            _db.Batches.Remove(Converter.BatchDtoToDb(batch));
+            await _db.SaveChangesAsync();
         }
 
         public Task DeleteAllAssociatedBatches(IEnumerable<BatchDTO> allBatches)
@@ -54,9 +55,10 @@ namespace InventoryManagement.Services
             await _db.SaveChangesAsync();
         }
 
-        public Task UpdateBatch(BatchDTO batch)
+        public async Task UpdateBatch(BatchDTO batch)
         {
-            throw new System.NotImplementedException();
+            _db.Batches.Update(Converter.BatchDtoToDb(batch));
+            await _db.SaveChangesAsync();
         }
         
     }
