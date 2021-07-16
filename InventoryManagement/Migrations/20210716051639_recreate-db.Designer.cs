@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InventoryManagement.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20210715061722_modifyKeysToInt")]
-    partial class modifyKeysToInt
+    [Migration("20210716051639_recreate-db")]
+    partial class recreatedb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,15 +21,12 @@ namespace InventoryManagement.Migrations
                 .HasAnnotation("ProductVersion", "5.0.7")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("InventoryManagement.Model.Batch", b =>
+            modelBuilder.Entity("InventoryManagement.Data.Entities.Batch", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("BatchId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("AssociatedProductId")
-                        .HasColumnType("int");
 
                     b.Property<double>("Cost")
                         .HasColumnType("float");
@@ -37,13 +34,10 @@ namespace InventoryManagement.Migrations
                     b.Property<DateTime>("ExpirationDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Location")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Manufacturer")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ProductId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("PurchasedDate")
@@ -52,16 +46,16 @@ namespace InventoryManagement.Migrations
                     b.Property<int>("Quantities")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("BatchId");
 
                     b.HasIndex("ProductId");
 
                     b.ToTable("Batches");
                 });
 
-            modelBuilder.Entity("InventoryManagement.Product", b =>
+            modelBuilder.Entity("InventoryManagement.Data.Entities.Product", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ProductId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -69,11 +63,8 @@ namespace InventoryManagement.Migrations
                     b.Property<string>("Brand")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Category")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Cost")
-                        .HasColumnType("float");
+                    b.Property<string>("Category")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Location")
                         .HasColumnType("nvarchar(max)");
@@ -91,19 +82,23 @@ namespace InventoryManagement.Migrations
                     b.Property<int>("Quantities")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.HasKey("ProductId");
 
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("InventoryManagement.Model.Batch", b =>
+            modelBuilder.Entity("InventoryManagement.Data.Entities.Batch", b =>
                 {
-                    b.HasOne("InventoryManagement.Product", null)
+                    b.HasOne("InventoryManagement.Data.Entities.Product", "Product")
                         .WithMany("Batches")
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("InventoryManagement.Product", b =>
+            modelBuilder.Entity("InventoryManagement.Data.Entities.Product", b =>
                 {
                     b.Navigation("Batches");
                 });

@@ -85,7 +85,6 @@ namespace InventoryManagement.Services
                 OnSale = product.OnSale,
                 Price = product.Price,
                 Location = product.Location,
-                Quantities = product.Quantities
             };
         }
     }
