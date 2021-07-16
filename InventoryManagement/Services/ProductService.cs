@@ -24,17 +24,15 @@ namespace InventoryManagement.Services
 
         public async Task DeleteProduct(ProductDTO product)
         {
-            // TODO: DELETE BATCHES AS WELL
             _db.Products.Remove(ProductToDb(product));
             await _db.SaveChangesAsync();
         }
 
-        // public Task DeleteProduct(int id)
-        // {
-        //     var product = await _db.Products.FindAsync(id);
-        //     _db.Products.Remove(product);
-        //
-        // }
+        public async Task DeleteProductById(int id)
+        {
+            var product = await _db.Products.FindAsync(id);
+            _db.Products.Remove(product);
+        }
 
         public async Task<IEnumerable<ProductDTO>> GetAllProducts()
         {
@@ -71,13 +69,13 @@ namespace InventoryManagement.Services
             await _db.SaveChangesAsync();
         }
 
-        public async Task ClearDatabase()
+        public async Task ClearProductTable()
         {
             _db.RemoveRange(_db.Products.ToArrayAsync());
             await _db.SaveChangesAsync();
         }
 
-        public Product ProductToDb(ProductDTO product)
+        private static Product ProductToDb(ProductDTO product)
         {
             return new Product
             {
@@ -99,7 +97,7 @@ namespace InventoryManagement.Services
             };
         }
 
-        public ProductDTO ProductToDto(Product product)
+        private static ProductDTO ProductToDto(Product product)
         {
             return new ProductDTO
             {
