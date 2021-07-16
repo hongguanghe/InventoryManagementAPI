@@ -17,28 +17,27 @@ namespace InventoryManagement.Controllers
     [Route("[controller]")]
     public class InventoryController : ControllerBase
     {
-
-        private readonly ApplicationDBContext _db;
         private readonly IProductService _productService;
-
-        public InventoryController(ApplicationDBContext db, IProductService productService)
+        private readonly IBatchService _batchService;
+        
+        public InventoryController(IProductService productService, IBatchService batchService)
         {
-            _db = db;
             _productService = productService;
+            _batchService = batchService;
         }
 
         [HttpGet("products/all", Name = "All Products")]
         public async Task<ProductsResponse> GetAllProducts()
         {
             var allProductDto = await _productService.GetAllProducts();
-            return ConvertProductsDto(allProductDto);
+            return Converter.ProductsDtoToResponse(allProductDto);
         }
 
         [HttpGet("products/product/{id}", Name = "One Product")]
         public async Task<ProductResponse> GetProductById(int id)
         {
             var productDto = await _productService.GetProductById(id);
-            return ConvertProductDto(productDto);
+            return Converter.ProductDtoToResponse(productDto);
         }
         
         [HttpPut("products/product/{id}", Name ="Update Product")]
@@ -61,6 +60,12 @@ namespace InventoryManagement.Controllers
             }
             await _productService.DeleteProduct(productDto);
             return Ok();        
+        }
+
+        [HttpGet("batches/batch/{id}", Name = "Get One Batch")]
+        public async Task<BatchResponse> GetBatch()
+        {
+            
         }
 
         [HttpPost("products/demo", Name = "Add Demo")]
@@ -207,46 +212,6 @@ namespace InventoryManagement.Controllers
             }
 
             return Ok();
-        }
-
-        private ProductResponse ConvertProductDto(ProductDTO productDto)
-        {
-            return new ProductResponse
-            {
-                Name = productDto.Name,
-                Brand = productDto.Brand,
-                Category = productDto.Category,
-                Location = productDto.Location,
-                OnSale = productDto.OnSale,
-                ProductId = productDto.ProductId,
-                Price = productDto.Price,
-                Quantities = productDto.Quantities,
-                Batches = productDto.Batches.Select(x => new BatchResponse
-                {
-                    BatchId = x.BatchId,
-                    Cost = x.Cost,
-                    ExpirationDate = x.ExpirationDate,
-                    Manufacturer = x.Manufacturer,
-                    ProductId = x.ProductId,
-                    PurchasedDate = x.PurchasedDate,
-                    Quantities = x.Quantities
-                }).ToList()
-            };
-        }
-
-        private ProductsResponse ConvertProductsDto(IEnumerable<ProductDTO> productsDto)
-        {
-            var response = new List<ProductResponse>();
-
-            foreach (var product in productsDto)
-            {
-                response.Add(ConvertProductDto(product));
-            }
-
-            return new ProductsResponse
-            {
-                Products = response
-            };
         }
     }
 }

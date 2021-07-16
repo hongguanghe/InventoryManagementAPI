@@ -18,13 +18,13 @@ namespace InventoryManagement.Services
         }
         public async Task CreateProduct(ProductDTO product)
         {
-            await _db.Products.AddAsync(ProductToDb(product));
+            await _db.Products.AddAsync(Converter.ProductDtoToDb(product));
             await _db.SaveChangesAsync();
         }
 
         public async Task DeleteProduct(ProductDTO product)
         {
-            _db.Products.Remove(ProductToDb(product));
+            _db.Products.Remove(Converter.ProductDtoToDb(product));
             await _db.SaveChangesAsync();
         }
 
@@ -41,7 +41,7 @@ namespace InventoryManagement.Services
 
             foreach (var product in allProducts)
             {
-                dtoProducts.Add(ProductToDto(product));
+                dtoProducts.Add(Converter.ProductToDto(product));
             }
 
             return dtoProducts;
@@ -50,7 +50,7 @@ namespace InventoryManagement.Services
         public async Task<ProductDTO> GetProductById(int id)
         {
             var product = await _db.Products.FindAsync(id);
-            return ProductToDto(product);
+            return Converter.ProductToDto(product);
         }
 
         public async Task<bool> ProductExistsById(int id)
@@ -65,7 +65,7 @@ namespace InventoryManagement.Services
 
         public async Task UpdateProduct(ProductDTO product)
         {
-            _db.Products.Update(ProductToDb(product));
+            _db.Products.Update(Converter.ProductDtoToDb(product));
             await _db.SaveChangesAsync();
         }
 
@@ -73,50 +73,6 @@ namespace InventoryManagement.Services
         {
             _db.RemoveRange(_db.Products.ToArrayAsync());
             await _db.SaveChangesAsync();
-        }
-
-        private static Product ProductToDb(ProductDTO product)
-        {
-            return new Product
-            {
-                Name = product.Name,
-                Batches = product.Batches.Select(x => new Batch
-                {
-                    Cost = x.Cost,
-                    ExpirationDate = x.ExpirationDate,
-                    Manufacturer = x.Manufacturer,
-                    PurchasedDate = x.PurchasedDate,
-                    Quantities = x.Quantities
-                }).ToList(),
-                Brand = product.Brand,
-                Category = product.Category,
-                OnSale = product.OnSale,
-                Price = product.Price,
-                Location = product.Location,
-                Quantities = product.Quantities
-            };
-        }
-
-        private static ProductDTO ProductToDto(Product product)
-        {
-            return new ProductDTO
-            {
-                Batches = product.Batches.Select(x => new BatchDTO()
-                {
-                    Cost = x.Cost,
-                    ExpirationDate = x.ExpirationDate,
-                    Manufacturer = x.Manufacturer,
-                    PurchasedDate = x.PurchasedDate,
-                    Quantities = x.Quantities
-                }).ToList(),
-                Brand = product.Brand,
-                Category = product.Category,
-                OnSale = product.OnSale,
-                Price = product.Price,
-                Location = product.Location,
-                ProductId = product.ProductId,
-                Name = product.Name
-            };
         }
     }
 }
