@@ -65,6 +65,33 @@ namespace InventoryManagement.Services
                 Product = ProductDtoToDb(batchDto.Product)
             };
         }
+
+        public static BatchDTO BatchToDto(Batch batch)
+        {
+            return new BatchDTO()
+            {
+                BatchId = batch.BatchId,
+                Cost = batch.Cost,
+                ExpirationDate = batch.ExpirationDate,
+                PurchasedDate = batch.PurchasedDate,
+                Quantities = batch.Quantities,
+                Manufacturer = batch.Manufacturer,
+                Product = ProductToDto(batch.Product),
+                ProductId = batch.ProductId
+            };
+        }
+
+        public static IEnumerable<BatchDTO> BatchesToDto(IEnumerable<Batch> batches)
+        {
+            var result = new List<BatchDTO>();
+
+            foreach (var batch in batches)
+            {
+                result.Add(BatchToDto(batch));
+            }
+
+            return result;
+        }
         
         public static ProductResponse ProductDtoToResponse(ProductDTO productDto)
         {

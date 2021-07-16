@@ -6,7 +6,7 @@ namespace InventoryManagement.Services
 {
     public interface IBatchService
     {
-        Task<IEnumerable<BatchDTO>> GetAllAssociatedBatches(int id);
+        Task<IEnumerable<BatchDTO>> GetAllAssociatedBatches(int productId);
         Task<BatchDTO> GetBatchById(int id);
         Task<bool> BatchExistsById(int id);
         Task DeleteBatchById(int id);

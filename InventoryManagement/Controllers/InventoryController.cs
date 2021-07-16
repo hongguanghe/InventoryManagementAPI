@@ -33,7 +33,7 @@ namespace InventoryManagement.Controllers
             return Converter.ProductsDtoToResponse(allProductDto);
         }
 
-        [HttpGet("products/product/{id}", Name = "One Product")]
+        [HttpGet("products/product/{id:int}", Name = "One Product")]
         public async Task<ProductResponse> GetProductById(int id)
         {
             var productDto = await _productService.GetProductById(id);
@@ -63,7 +63,7 @@ namespace InventoryManagement.Controllers
         }
 
         [HttpGet("batches/batch/{id}", Name = "Get One Batch")]
-        public async Task<BatchResponse> GetBatch()
+        public async Task<BatchResponse> GetBatches()
         {
             
         }

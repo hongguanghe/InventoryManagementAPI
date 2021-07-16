@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using InventoryManagement.Data;
 using InventoryManagement.Data.Entities;
 using InventoryManagement.Services.DTOs;
+using Microsoft.EntityFrameworkCore;
 
 namespace InventoryManagement.Services
 {
@@ -15,9 +17,10 @@ namespace InventoryManagement.Services
             _db = db;
         }
 
-        public Task<IEnumerable<BatchDTO>> GetAllAssociatedBatches(int id)
+        public async Task<IEnumerable<BatchDTO>> GetAllAssociatedBatches(int productId)
         {
-            throw new System.NotImplementedException();
+            var result = await _db.Batches.Where(p => p.ProductId == productId).ToListAsync();
+            return Converter.BatchesToDto(result);
         }
 
         public Task<BatchDTO> GetBatchById(int id)
@@ -49,7 +52,6 @@ namespace InventoryManagement.Services
         {
             await _db.Batches.AddAsync(Converter.BatchDtoToDb(batch));
             await _db.SaveChangesAsync();
-            
         }
 
         public Task UpdateBatch(BatchDTO batch)
