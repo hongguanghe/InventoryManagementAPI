@@ -40,12 +40,27 @@ namespace InventoryManagement.Controllers
             var productDto = await _productService.GetProductById(id);
             return ConvertProductDto(productDto);
         }
+        
+        [HttpPut("products/product/{id}", Name ="Update Product")]
+        public async Task<ActionResult> UpdateProduct(ProductDTO productDto)
+        {
+            if (!await _productService.ProductExistsById(productDto.ProductId))
+            {
+                return NotFound();
+            }
+            await _productService.UpdateProduct(productDto);
+            return Ok();
+        }
 
         [HttpDelete("products/product/{id}", Name ="Delete Product")]
         public async Task<ActionResult> DeleteProduct(int id)
         {
+            if (!await _productService.ProductExistsById(id))
+            {
+                return NotFound();
+            }
             await _productService.DeleteProduct(id);
-            return Ok();
+            return Ok();        
         }
 
         [HttpPost("products/demo", Name = "Add Demo")]
