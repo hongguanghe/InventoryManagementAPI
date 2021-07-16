@@ -3,10 +3,12 @@ using InventoryManagement.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using InventoryManagement.Controllers.Models;
 using InventoryManagement.Data.Entities;
 using InventoryManagement.Services.DTOs;
+using Microsoft.AspNetCore.DataProtection.XmlEncryption;
 
 namespace InventoryManagement.Controllers
 {
@@ -29,18 +31,14 @@ namespace InventoryManagement.Controllers
         public async Task<ProductsResponse> GetAllProducts()
         {
             var allProductDto = await _productService.GetAllProducts();
-
-            return new ProductsResponse
-            {
-                Products = allProductDto.ToList()
-            };
+            return ConvertProductsDto(allProductDto);
         }
 
         [HttpGet("products/product/{id}", Name = "One Product")]
         public async Task<ProductResponse> GetProductById(int id)
         {
             var productDto = await _productService.GetProductById(id);
-            return ConvertDTO(productDto);
+            return ConvertProductDto(productDto);
         }
 
         [HttpDelete("products/product/{id}", Name ="Delete Product")]
@@ -196,7 +194,7 @@ namespace InventoryManagement.Controllers
             return Ok();
         }
 
-        private ProductResponse ConvertDTO(ProductDTO productDto)
+        private ProductResponse ConvertProductDto(ProductDTO productDto)
         {
             return new ProductResponse
             {
@@ -208,14 +206,31 @@ namespace InventoryManagement.Controllers
                 ProductId = productDto.ProductId,
                 Price = productDto.Price,
                 Quantities = productDto.Quantities,
-                Batches = productDto.Batches.Select(x => new BatchDTO
+                Batches = productDto.Batches.Select(x => new BatchResponse
                 {
+                    BatchId = x.BatchId,
                     Cost = x.Cost,
                     ExpirationDate = x.ExpirationDate,
                     Manufacturer = x.Manufacturer,
+                    ProductId = x.ProductId,
                     PurchasedDate = x.PurchasedDate,
                     Quantities = x.Quantities
                 }).ToList()
+            };
+        }
+
+        private ProductsResponse ConvertProductsDto(IEnumerable<ProductDTO> productsDto)
+        {
+            var response = new List<ProductResponse>();
+
+            foreach (var product in productsDto)
+            {
+                response.Add(ConvertProductDto(product));
+            }
+
+            return new ProductsResponse
+            {
+                Products = response
             };
         }
     }

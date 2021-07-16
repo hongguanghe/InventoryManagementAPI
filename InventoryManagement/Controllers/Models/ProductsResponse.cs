@@ -6,6 +6,6 @@ namespace InventoryManagement.Controllers.Models
 {
     public class ProductsResponse
     {
-        public List<ProductDTO> Products { get; set; }
+        public List<ProductResponse> Products { get; set; }
     }
 }
