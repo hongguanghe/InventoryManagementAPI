@@ -19,7 +19,5 @@ namespace InventoryManagement.Services
         Task CreateProduct(ProductDTO product);
         Task UpdateProduct(ProductDTO product);
         Task ClearProductTable();
-        // Product ProductToDb(ProductDTO product);
-        // ProductDTO ProductToDto(Product product);
     }
 }

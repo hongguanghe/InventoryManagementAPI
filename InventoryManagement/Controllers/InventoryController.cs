@@ -58,14 +58,64 @@ namespace InventoryManagement.Controllers
             {
                 return NotFound();
             }
+            await _batchService.DeleteAllAssociatedBatches(productDto.Batches);
             await _productService.DeleteProduct(productDto);
             return Ok();        
         }
+        
+        [HttpPost("products/product/create", Name ="Create Product")]
+        public async Task<ActionResult> CreateProduct(ProductDTO productDto)
+        {
+            if (!await _productService.ProductExistsByName(productDto.Name))
+            {
+                return BadRequest();
+            }
+            await _productService.CreateProduct(productDto);
+            return Ok();
+        }
 
         [HttpGet("batches/batch/{id}", Name = "Get One Batch")]
-        public async Task<BatchResponse> GetBatch()
+        public async Task<BatchResponse> GetBatch(int id)
         {
-            
+            return Converter.BatchDtoToResponse(await _batchService.GetBatchById(id));
+        }
+        
+        [HttpGet("batches/batch/create", Name = "Create One Batch")]
+        public async Task<ActionResult> CreateBatch(BatchDTO batchDto)
+        {
+            if (!await _batchService.BatchExistsById(batchDto.BatchId))
+            {
+                return BadRequest();
+            }
+            await _batchService.CreateBatch(batchDto);
+            return Ok();        }
+        
+        [HttpDelete("batches/batch/{id}", Name = "Delete One Batch")]
+        public async Task<ActionResult> DeleteBatch(int id)
+        {
+            if (!await _batchService.BatchExistsById(id))
+            {
+                return NotFound();
+            }
+            await _batchService.GetBatchById(id);
+            return Ok();
+        }
+                
+        [HttpPut("batches/batch/{id}", Name = "Update One Batch")]
+        public async Task<ActionResult> UpdateBatch(BatchDTO batchDto)
+        {
+            if (!await _batchService.BatchExistsById(batchDto.BatchId))
+            {
+                return NotFound();
+            }
+            await _batchService.UpdateBatch(batchDto);
+            return Ok();
+        }
+        
+        [HttpGet("products/products/{productId}/batches", Name = "Get Associated Batches")]
+        public async Task<BatchesResponse> GetAssociateBatch(int productId)
+        {
+            return Converter.BatchesDtoToResponse(await _batchService.GetAllAssociatedBatches(productId));
         }
 
         [HttpPost("products/demo", Name = "Add Demo")]

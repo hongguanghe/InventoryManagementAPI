@@ -132,5 +132,34 @@ namespace InventoryManagement.Services
                 Products = response
             };
         }
+
+        public static BatchResponse BatchDtoToResponse(BatchDTO batchDto)
+        {
+            return new BatchResponse
+            {
+                BatchId = batchDto.BatchId,
+                Cost = batchDto.Cost,
+                ExpirationDate = batchDto.ExpirationDate,
+                Manufacturer = batchDto.Manufacturer,
+                ProductId = batchDto.ProductId,
+                PurchasedDate = batchDto.PurchasedDate,
+                Quantities = batchDto.Quantities
+            };
+        }
+
+        public static BatchesResponse BatchesDtoToResponse(IEnumerable<BatchDTO> batchesDto)
+        {
+            var response = new List<BatchResponse>();
+
+            foreach (var batch in batchesDto)
+            {
+                response.Add(BatchDtoToResponse(batch));
+            }
+
+            return new BatchesResponse()
+            {
+                Batches = response
+            };
+        }
     }
 }
