@@ -1,10 +1,8 @@
 ﻿using InventoryManagement.Data;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using InventoryManagement.Data.Entities;
 using InventoryManagement.Services.DTOs;
 
 namespace InventoryManagement.Services

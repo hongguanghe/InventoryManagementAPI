@@ -1,14 +1,9 @@
-﻿using InventoryManagement.Data;
-using InventoryManagement.Services;
+﻿using InventoryManagement.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using InventoryManagement.Controllers.Models;
-using InventoryManagement.Data.Entities;
 using InventoryManagement.Services.DTOs;
-using Microsoft.AspNetCore.DataProtection.XmlEncryption;
 
 namespace InventoryManagement.Controllers
 {
@@ -112,7 +107,7 @@ namespace InventoryManagement.Controllers
             return Ok();
         }
         
-        [HttpGet("products/products/{productId}/batches", Name = "Get Associated Batches")]
+        [HttpGet("products/{productId}/batches", Name = "Get Associated Batches")]
         public async Task<BatchesResponse> GetAssociateBatch(int productId)
         {
             return Converter.BatchesDtoToResponse(await _batchService.GetAllAssociatedBatches(productId));
