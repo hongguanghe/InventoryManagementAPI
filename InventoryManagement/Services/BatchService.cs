@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using InventoryManagement.Data;
-using InventoryManagement.Data.Entities;
 using InventoryManagement.Services.DTOs;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,9 +22,9 @@ namespace InventoryManagement.Services
             return Converter.BatchesToDto(result);
         }
 
-        public Task<BatchDTO> GetBatchById(int id)
+        public async Task<BatchDTO> GetBatchById(int id)
         {
-            throw new System.NotImplementedException();
+           return Converter.BatchToDto(await _db.Batches.FindAsync(id));
         }
 
         public async Task<bool> BatchExistsById(int id)
@@ -33,9 +32,10 @@ namespace InventoryManagement.Services
             return await _db.Batches.Where(p => p.BatchId == id).AnyAsync();
         }
 
-        public Task DeleteBatchById(int id)
+        public async Task DeleteBatchById(int id)
         {
-            throw new System.NotImplementedException();
+            var batch = await _db.Batches.FindAsync(id);
+            _db.Batches.Remove(batch);        
         }
 
         public async Task DeleteBatch(BatchDTO batch)
@@ -44,9 +44,12 @@ namespace InventoryManagement.Services
             await _db.SaveChangesAsync();
         }
 
-        public Task DeleteAllAssociatedBatches(IEnumerable<BatchDTO> allBatches)
+        public async Task DeleteAllAssociatedBatches(IEnumerable<BatchDTO> allBatches)
         {
-            throw new System.NotImplementedException();
+            foreach (var batch in allBatches)
+            {
+                await DeleteBatch(batch);
+            }
         }
 
         public async Task CreateBatch(BatchDTO batch)

@@ -63,7 +63,7 @@ namespace InventoryManagement.Controllers
         }
 
         [HttpGet("batches/batch/{id}", Name = "Get One Batch")]
-        public async Task<BatchResponse> GetBatches()
+        public async Task<BatchResponse> GetBatch()
         {
             
         }
