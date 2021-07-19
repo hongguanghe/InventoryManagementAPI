@@ -35,7 +35,7 @@ namespace InventoryManagement.Controllers
             return Converter.ProductDtoToResponse(productDto);
         }
         
-        [HttpPut("products/product/{id}", Name ="Update Product")]
+        [HttpPatch ("products/product/{id}", Name ="Update Product")]
         public async Task<ActionResult> UpdateProduct(ProductDTO productDto)
         {
             if (!await _productService.ProductExistsById(productDto.ProductId))
@@ -96,7 +96,7 @@ namespace InventoryManagement.Controllers
             return Ok();
         }
                 
-        [HttpPut("batches/batch/{id}", Name = "Update One Batch")]
+        [HttpPatch("batches/batch/{id}", Name = "Update One Batch")]
         public async Task<ActionResult> UpdateBatch(BatchDTO batchDto)
         {
             if (!await _batchService.BatchExistsById(batchDto.BatchId))
