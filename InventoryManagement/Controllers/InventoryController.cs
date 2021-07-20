@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper;
 using InventoryManagement.Controllers.Models;
 using InventoryManagement.Services.DTOs;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace InventoryManagement.Controllers
 {
@@ -14,11 +16,13 @@ namespace InventoryManagement.Controllers
     {
         private readonly IProductService _productService;
         private readonly IBatchService _batchService;
+        private readonly IMapper _mapper;
         
-        public InventoryController(IProductService productService, IBatchService batchService)
+        public InventoryController(IProductService productService, IBatchService batchService, IMapper mapper)
         {
             _productService = productService;
             _batchService = batchService;
+            _mapper = mapper;
         }
 
         [HttpGet("products/all", Name = "All Products")]
