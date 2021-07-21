@@ -16,10 +16,6 @@ namespace InventoryManagement.Data
 
         public DbSet<Product> Products { get; set; }
         public DbSet<Batch> Batches { get; set; }
-
-        internal void FindAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

@@ -8,8 +8,8 @@ namespace InventoryManagement.Mappings
     {
         public DtoToEntity()
         {
-            CreateMap<BatchDTO, Batch>();
-            CreateMap<ProductDTO, Product>();
+            CreateMap<BatchDTO, Batch>().ReverseMap();
+            CreateMap<ProductDTO, Product>().ReverseMap();
         }
     }
 

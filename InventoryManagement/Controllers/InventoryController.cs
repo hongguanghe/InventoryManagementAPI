@@ -29,14 +29,16 @@ namespace InventoryManagement.Controllers
         public async Task<ProductsResponse> GetAllProducts()
         {
             var allProductDto = await _productService.GetAllProducts();
-            return Converter.ProductsDtoToResponse(allProductDto);
+            return _mapper.Map<ProductsResponse>(allProductDto);
+            // return Converter.ProductsDtoToResponse(allProductDto);
         }
 
         [HttpGet("products/product/{id:int}", Name = "One Product")]
         public async Task<ProductResponse> GetProductById(int id)
         {
             var productDto = await _productService.GetProductById(id);
-            return Converter.ProductDtoToResponse(productDto);
+            return _mapper.Map<ProductResponse>(productDto);
+            // return Converter.ProductDtoToResponse(productDto);
         }
         
         [HttpPatch ("products/product/{id}", Name ="Update Product")]
@@ -76,7 +78,8 @@ namespace InventoryManagement.Controllers
         [HttpGet("batches/batch/{id}", Name = "Get One Batch")]
         public async Task<BatchResponse> GetBatch(int id)
         {
-            return Converter.BatchDtoToResponse(await _batchService.GetBatchById(id));
+            return _mapper.Map<BatchResponse>(await _batchService.GetBatchById(id));
+            // return Converter.BatchDtoToResponse(await _batchService.GetBatchById(id));
         }
         
         [HttpGet("batches/batch/create", Name = "Create One Batch")]
@@ -87,7 +90,8 @@ namespace InventoryManagement.Controllers
                 return BadRequest();
             }
             await _batchService.CreateBatch(batchDto);
-            return Ok();        }
+            return Ok();        
+        }
         
         [HttpDelete("batches/batch/{id}", Name = "Delete One Batch")]
         public async Task<ActionResult> DeleteBatch(int id)
@@ -114,7 +118,8 @@ namespace InventoryManagement.Controllers
         [HttpGet("products/{productId}/batches", Name = "Get Associated Batches")]
         public async Task<BatchesResponse> GetAssociateBatch(int productId)
         {
-            return Converter.BatchesDtoToResponse(await _batchService.GetAllAssociatedBatches(productId));
+            return _mapper.Map<BatchesResponse>(await _batchService.GetAllAssociatedBatches(productId));
+            // return Converter.BatchesDtoToResponse(await _batchService.GetAllAssociatedBatches(productId));
         }
 
         [HttpPost("products/demo", Name = "Add Demo")]
