@@ -32,6 +32,7 @@ namespace InventoryManagement
             services.AddDbContext<ApplicationDBContext> (options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddTransient<IProductService, ProductService>();
+            services.AddTransient<IBatchService, BatchService>();
             services.AddControllers();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSwaggerGen(c =>

@@ -1,7 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using InventoryManagement.Data;
+using InventoryManagement.Data.Entities;
 using InventoryManagement.Services.DTOs;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,10 +13,12 @@ namespace InventoryManagement.Services
     public class BatchService : IBatchService
     {
         private readonly ApplicationDBContext _db;
+        private readonly IMapper _mapper;
         
-        public BatchService(ApplicationDBContext db)
+        public BatchService(ApplicationDBContext db, IMapper mapper)
         {
             _db = db;
+            _mapper = mapper;
         }
 
         public async Task<IEnumerable<BatchDTO>> GetAllAssociatedBatches(int productId)
@@ -24,7 +29,8 @@ namespace InventoryManagement.Services
 
         public async Task<BatchDTO> GetBatchById(int id)
         {
-           return Converter.BatchToDto(await _db.Batches.FindAsync(id));
+            return _mapper.Map<BatchDTO>(await _db.Batches.FindAsync(id));
+            // return Converter.BatchToDto(await _db.Batches.FindAsync(id));
         }
 
         public async Task<bool> BatchExistsById(int id)

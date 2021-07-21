@@ -13,7 +13,7 @@ namespace InventoryManagement.Services
         Task DeleteProductById(int id);
         Task DeleteProduct(ProductDTO product);
         Task CreateProduct(ProductDTO product);
-        Task UpdateProduct(ProductDTO product);
+        Task UpdateProduct(ProductDTO productDto);
         Task ClearProductTable();
     }
 }
