@@ -51,15 +51,26 @@ namespace InventoryManagement.Controllers
             return Ok();
         }
 
+        // [HttpDelete("products/product/{id}", Name ="Delete Product")]
+        // public async Task<ActionResult> DeleteProduct(ProductDTO productDto)
+        // {
+        //     if (!await _productService.ProductExistsById(productDto.ProductId))
+        //     {
+        //         return NotFound();
+        //     }
+        //     await _batchService.DeleteAllAssociatedBatches(productDto.Batches);
+        //     await _productService.DeleteProduct(productDto);
+        //     return Ok();        
+        // }
+        
         [HttpDelete("products/product/{id}", Name ="Delete Product")]
-        public async Task<ActionResult> DeleteProduct(ProductDTO productDto)
+        public async Task<ActionResult> DeleteProductById(int id)
         {
-            if (!await _productService.ProductExistsById(productDto.ProductId))
+            if (!await _productService.ProductExistsById(id))
             {
                 return NotFound();
             }
-            await _batchService.DeleteAllAssociatedBatches(productDto.Batches);
-            await _productService.DeleteProduct(productDto);
+            await _productService.DeleteProductById(id);
             return Ok();        
         }
         

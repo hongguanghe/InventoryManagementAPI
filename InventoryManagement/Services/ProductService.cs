@@ -32,6 +32,8 @@ namespace InventoryManagement.Services
 
         public async Task DeleteProductById(int id)
         {
+            var associatedBatches = await _db.Batches.Where(p => p.ProductId == id).ToListAsync();
+            _db.Batches.RemoveRange(associatedBatches);
             _db.Products.Remove(await _db.Products.FindAsync(id));
             await _db.SaveChangesAsync();
         }
