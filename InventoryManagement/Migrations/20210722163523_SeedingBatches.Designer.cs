@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InventoryManagement.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210716051639_recreate-db")]
-    partial class recreatedb
+    [Migration("20210722163523_SeedingBatches")]
+    partial class SeedingBatches
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -51,6 +51,38 @@ namespace InventoryManagement.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("Batches");
+
+                    b.HasData(
+                        new
+                        {
+                            BatchId = 1,
+                            Cost = 9.0,
+                            ExpirationDate = new DateTime(2022, 2, 7, 10, 35, 20, 642, DateTimeKind.Local).AddTicks(7289),
+                            Manufacturer = "M1",
+                            ProductId = 1,
+                            PurchasedDate = new DateTime(2021, 7, 22, 10, 35, 20, 649, DateTimeKind.Local).AddTicks(3200),
+                            Quantities = 200
+                        },
+                        new
+                        {
+                            BatchId = 2,
+                            Cost = 8.0,
+                            ExpirationDate = new DateTime(2022, 8, 26, 10, 35, 20, 649, DateTimeKind.Local).AddTicks(3914),
+                            Manufacturer = "M1",
+                            ProductId = 1,
+                            PurchasedDate = new DateTime(2021, 7, 22, 10, 35, 20, 649, DateTimeKind.Local).AddTicks(3930),
+                            Quantities = 200
+                        },
+                        new
+                        {
+                            BatchId = 3,
+                            Cost = 7.0,
+                            ExpirationDate = new DateTime(2021, 10, 30, 10, 35, 20, 649, DateTimeKind.Local).AddTicks(3935),
+                            Manufacturer = "M1",
+                            ProductId = 1,
+                            PurchasedDate = new DateTime(2021, 7, 22, 10, 35, 20, 649, DateTimeKind.Local).AddTicks(3938),
+                            Quantities = 200
+                        });
                 });
 
             modelBuilder.Entity("InventoryManagement.Data.Entities.Product", b =>
@@ -79,12 +111,21 @@ namespace InventoryManagement.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
-                    b.Property<int>("Quantities")
-                        .HasColumnType("int");
-
                     b.HasKey("ProductId");
 
                     b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            ProductId = 1,
+                            Brand = "BrandA",
+                            Category = "Fashion",
+                            Location = "A8",
+                            Name = "Product A",
+                            OnSale = true,
+                            Price = 9.0
+                        });
                 });
 
             modelBuilder.Entity("InventoryManagement.Data.Entities.Batch", b =>

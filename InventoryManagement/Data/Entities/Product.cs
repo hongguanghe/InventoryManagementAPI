@@ -14,7 +14,6 @@ namespace InventoryManagement.Data.Entities
         public double Price { get; set; }
         public bool OnSale { get; set; }
         public string Location { get; set; }
-        public int Quantities { get; set; }
         public List<Batch> Batches { get; set; }
     }
 }

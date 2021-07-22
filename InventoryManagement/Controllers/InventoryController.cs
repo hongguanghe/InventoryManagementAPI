@@ -1,6 +1,8 @@
-﻿using InventoryManagement.Services;
+﻿using System.Collections;
+using InventoryManagement.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using InventoryManagement.Controllers.Models;
@@ -26,11 +28,10 @@ namespace InventoryManagement.Controllers
         }
 
         [HttpGet("products/all", Name = "All Products")]
-        public async Task<ProductsResponse> GetAllProducts()
+        public async Task<IEnumerable> GetAllProducts()
         {
             var allProductDto = await _productService.GetAllProducts();
-            return _mapper.Map<ProductsResponse>(allProductDto);
-            // return Converter.ProductsDtoToResponse(allProductDto);
+            return _mapper.Map<IEnumerable<ProductResponse>>(allProductDto);
         }
 
         [HttpGet("products/product/{id:int}", Name = "One Product")]
@@ -116,9 +117,11 @@ namespace InventoryManagement.Controllers
         }
         
         [HttpGet("products/{productId}/batches", Name = "Get Associated Batches")]
-        public async Task<BatchesResponse> GetAssociateBatch(int productId)
+        public async Task<List<BatchResponse>> GetAssociateBatch(int productId)
         {
-            return _mapper.Map<BatchesResponse>(await _batchService.GetAllAssociatedBatches(productId));
+            var batchesResult = await _batchService.GetAllAssociatedBatches(productId);
+            return batchesResult.ToList().Select(x => _mapper.Map<BatchResponse>(x)).ToList();
+            // return _mapper.Map<List<BatchResponse>>(batchesResult);
             // return Converter.BatchesDtoToResponse(await _batchService.GetAllAssociatedBatches(productId));
         }
 

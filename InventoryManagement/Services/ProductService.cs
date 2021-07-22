@@ -11,9 +11,9 @@ namespace InventoryManagement.Services
 {
     public class ProductService : IProductService
     {
-        private readonly ApplicationDBContext _db;
+        private readonly ApplicationDbContext _db;
         private readonly IMapper _mapper;
-        public ProductService(ApplicationDBContext db, IMapper mapper)
+        public ProductService(ApplicationDbContext db, IMapper mapper)
         {
             _db = db;
             _mapper = mapper;
@@ -41,12 +41,11 @@ namespace InventoryManagement.Services
         public async Task<IEnumerable<ProductDTO>> GetAllProducts()
         {
             var allProducts = await _db.Products.ToListAsync();
-            // var dtoProducts = new List<ProductDTO>();
-            //
-            // foreach (var product in allProducts)
-            // {
-            //     dtoProducts.Add(Converter.ProductToDto(product));
-            // }
+            foreach (var product in allProducts)
+            {
+                var associatedBatches = await _db.Batches.Where(p => p.ProductId == product.ProductId).ToListAsync();
+                product.Batches = associatedBatches;
+            }
             return _mapper.Map<IEnumerable<ProductDTO>>(allProducts);
         }
 

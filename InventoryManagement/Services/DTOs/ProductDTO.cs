@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using InventoryManagement.Data.Entities;
 
 namespace InventoryManagement.Services.DTOs
 {
@@ -14,8 +14,8 @@ namespace InventoryManagement.Services.DTOs
         public bool OnSale { get; set; }
         public string Location { get; set; }
         public List<BatchDTO> Batches { get; set; }
-        
-        public double Cost => Batches.Select(x => x.Cost).Average();
-        public int Quantities => Batches.Select(x => x.Quantities).Sum();
+
+        public double Cost => Batches.Any() ? Math.Round(Batches.Select(x => x.Cost).Average(), 2) : 0;
+        public int Quantities => Batches.Any() ? Batches.Select(x => x.Quantities).Sum() : 0;
     }
 }

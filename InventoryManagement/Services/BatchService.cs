@@ -12,10 +12,10 @@ namespace InventoryManagement.Services
 {
     public class BatchService : IBatchService
     {
-        private readonly ApplicationDBContext _db;
+        private readonly ApplicationDbContext _db;
         private readonly IMapper _mapper;
         
-        public BatchService(ApplicationDBContext db, IMapper mapper)
+        public BatchService(ApplicationDbContext db, IMapper mapper)
         {
             _db = db;
             _mapper = mapper;
@@ -25,7 +25,6 @@ namespace InventoryManagement.Services
         {
             var result = await _db.Batches.Where(p => p.ProductId == productId).ToListAsync();
             return _mapper.Map<IEnumerable<BatchDTO>>(result);
-            // return Converter.BatchesToDto(result);
         }
 
         public async Task<BatchDTO> GetBatchById(int id)
@@ -48,7 +47,8 @@ namespace InventoryManagement.Services
 
         public async Task DeleteBatch(BatchDTO batch)
         {
-            _db.Batches.Remove(Converter.BatchDtoToDb(batch));
+            var batchToDelete = _mapper.Map<Batch>(batch);
+            _db.Batches.Remove(batchToDelete);
             await _db.SaveChangesAsync();
         }
 
