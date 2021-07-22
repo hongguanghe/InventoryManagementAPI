@@ -24,7 +24,8 @@ namespace InventoryManagement.Services
         public async Task<IEnumerable<BatchDTO>> GetAllAssociatedBatches(int productId)
         {
             var result = await _db.Batches.Where(p => p.ProductId == productId).ToListAsync();
-            return Converter.BatchesToDto(result);
+            return _mapper.Map<IEnumerable<BatchDTO>>(result);
+            // return Converter.BatchesToDto(result);
         }
 
         public async Task<BatchDTO> GetBatchById(int id)
@@ -41,7 +42,8 @@ namespace InventoryManagement.Services
         public async Task DeleteBatchById(int id)
         {
             var batch = await _db.Batches.FindAsync(id);
-            _db.Batches.Remove(batch);        
+            _db.Batches.Remove(batch);
+            await _db.SaveChangesAsync();
         }
 
         public async Task DeleteBatch(BatchDTO batch)
