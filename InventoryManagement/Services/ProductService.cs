@@ -20,14 +20,12 @@ namespace InventoryManagement.Services
         }
         public async Task CreateProduct(ProductDTO product)
         {
-            // await _db.Products.AddAsync(Converter.ProductDtoToDb(product));
             await _db.Products.AddAsync(_mapper.Map<Product>(product));
             await _db.SaveChangesAsync();
         }
 
         public async Task DeleteProduct(ProductDTO product)
         {
-            // _db.Products.Remove(Converter.ProductDtoToDb(product));
             _db.Products.Remove(_mapper.Map<Product>(product));
             await _db.SaveChangesAsync();
         }
@@ -51,9 +49,9 @@ namespace InventoryManagement.Services
 
         public async Task<ProductDTO> GetProductById(int id)
         {
-            return _mapper.Map<ProductDTO>(await _db.Products.FindAsync(id));
-            // var product = await _db.Products.FindAsync(id);
-            // return Converter.ProductToDto(product);
+            var product = await _db.Products.FindAsync(id);
+            product.Batches = await _db.Batches.Where(p => p.ProductId == product.ProductId).ToListAsync();
+            return _mapper.Map<ProductDTO>(product);
         }
 
         public async Task<bool> ProductExistsById(int id)
@@ -68,7 +66,6 @@ namespace InventoryManagement.Services
 
         public async Task UpdateProduct(ProductDTO productDto)
         {
-            // _db.Products.Update(Converter.ProductDtoToDb(product));
             _db.Products.Update(_mapper.Map<Product>(productDto));
             await _db.SaveChangesAsync();
         }
