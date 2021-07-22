@@ -52,6 +52,10 @@ namespace InventoryManagement.Services
         public async Task<ProductDTO> GetProductById(int id)
         {
             var product = await _db.Products.FindAsync(id);
+            if (product == null)
+            {
+                return null;
+            }
             product.Batches = await _db.Batches.Where(p => p.ProductId == product.ProductId).ToListAsync();
             return _mapper.Map<ProductDTO>(product);
         }
