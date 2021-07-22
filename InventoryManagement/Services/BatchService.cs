@@ -62,13 +62,15 @@ namespace InventoryManagement.Services
 
         public async Task CreateBatch(BatchDTO batch)
         {
-            await _db.Batches.AddAsync(Converter.BatchDtoToDb(batch));
+            // await _db.Batches.AddAsync(Converter.BatchDtoToDb(batch));
+            await _db.Batches.AddAsync(_mapper.Map<Batch>(batch));
             await _db.SaveChangesAsync();
         }
 
         public async Task UpdateBatch(BatchDTO batch)
         {
-            _db.Batches.Update(Converter.BatchDtoToDb(batch));
+            // _db.Batches.Update(Converter.BatchDtoToDb(batch));
+            _db.Batches.Update(_mapper.Map<Batch>(batch));
             await _db.SaveChangesAsync();
         }
         

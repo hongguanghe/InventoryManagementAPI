@@ -82,7 +82,7 @@ namespace InventoryManagement.Controllers
             // return Converter.BatchDtoToResponse(await _batchService.GetBatchById(id));
         }
         
-        [HttpGet("batches/batch/create", Name = "Create One Batch")]
+        [HttpPost("batches/batch/create", Name = "Create One Batch")]
         public async Task<ActionResult> CreateBatch(BatchDTO batchDto)
         {
             if (!await _batchService.BatchExistsById(batchDto.BatchId))
