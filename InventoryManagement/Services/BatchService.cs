@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -30,7 +29,6 @@ namespace InventoryManagement.Services
         public async Task<BatchDTO> GetBatchById(int id)
         {
             return _mapper.Map<BatchDTO>(await _db.Batches.FindAsync(id));
-            // return Converter.BatchToDto(await _db.Batches.FindAsync(id));
         }
 
         public async Task<bool> BatchExistsById(int id)
@@ -62,14 +60,12 @@ namespace InventoryManagement.Services
 
         public async Task CreateBatch(BatchDTO batch)
         {
-            // await _db.Batches.AddAsync(Converter.BatchDtoToDb(batch));
             await _db.Batches.AddAsync(_mapper.Map<Batch>(batch));
             await _db.SaveChangesAsync();
         }
 
         public async Task UpdateBatch(BatchDTO batch)
         {
-            // _db.Batches.Update(Converter.BatchDtoToDb(batch));
             _db.Batches.Update(_mapper.Map<Batch>(batch));
             await _db.SaveChangesAsync();
         }
