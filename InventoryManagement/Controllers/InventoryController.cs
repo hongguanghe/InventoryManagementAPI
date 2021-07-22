@@ -38,7 +38,6 @@ namespace InventoryManagement.Controllers
         {
             var productDto = await _productService.GetProductById(id);
             return _mapper.Map<ProductResponse>(productDto);
-            // return Converter.ProductDtoToResponse(productDto);
         }
         
         [HttpPatch ("products/product/{id}", Name ="Update Product")]
@@ -99,7 +98,7 @@ namespace InventoryManagement.Controllers
             {
                 return NotFound();
             }
-            await _batchService.GetBatchById(id);
+            await _batchService.DeleteBatchById(id);
             return Ok();
         }
                 
