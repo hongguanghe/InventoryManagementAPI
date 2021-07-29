@@ -15,5 +15,6 @@ namespace InventoryManagement.Services
         Task CreateProduct(ProductDTO product);
         Task UpdateProduct(ProductDTO productDto);
         Task ClearProductTable();
+        Task<List<string>> GetAllCategories();
     }
 }

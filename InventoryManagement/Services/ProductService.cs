@@ -1,4 +1,5 @@
-﻿using InventoryManagement.Data;
+﻿using System;
+using InventoryManagement.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -80,6 +81,11 @@ namespace InventoryManagement.Services
         {
             _db.RemoveRange(_db.Products.ToArrayAsync());
             await _db.SaveChangesAsync();
+        }
+
+        public async Task<List<string>> GetAllCategories()
+        {
+            return Enum.GetNames(typeof(Categories)).ToList();
         }
     }
 }

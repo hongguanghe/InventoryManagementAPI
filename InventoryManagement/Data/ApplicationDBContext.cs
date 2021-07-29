@@ -58,90 +58,90 @@ namespace InventoryManagement.Data
                 {
                     BatchId = 1,
                     Cost = 9.00,
-                    ExpirationDate = DateTime.Now.AddDays(200),
+                    ExpirationDate = DateTime.UtcNow.AddDays(200),
                     Manufacturer = "M1",
                     ProductId = 1,
-                    PurchasedDate = DateTime.Now,
+                    PurchasedDate = DateTime.UtcNow,
                     Quantities = 500
                 },
                 new Batch
                 {
                     BatchId = 2,
                     Cost = 8.00,
-                    ExpirationDate = DateTime.Now.AddDays(400),
+                    ExpirationDate = DateTime.UtcNow.AddDays(400),
                     Manufacturer = "M1",
                     ProductId = 1,
-                    PurchasedDate = DateTime.Now,
+                    PurchasedDate = DateTime.UtcNow,
                     Quantities = 20
                 },
                 new Batch
                 {
                     BatchId = 3,
                     Cost = 7.00,
-                    ExpirationDate = DateTime.Now.AddDays(100),
+                    ExpirationDate = DateTime.UtcNow.AddDays(100),
                     Manufacturer = "M1",
                     ProductId = 1,
-                    PurchasedDate = DateTime.Now,
+                    PurchasedDate = DateTime.UtcNow,
                     Quantities = 50
                 },
                 new Batch
                 {
                     BatchId = 4,
                     Cost = 9.00,
-                    ExpirationDate = DateTime.Now.AddDays(200),
+                    ExpirationDate = DateTime.UtcNow.AddDays(200),
                     Manufacturer = "E1 Inc.",
                     ProductId = 2,
-                    PurchasedDate = DateTime.Now,
+                    PurchasedDate = DateTime.UtcNow,
                     Quantities = 533
                 },
                 new Batch
                 {
                     BatchId = 5,
                     Cost = 18.00,
-                    ExpirationDate = DateTime.Now.AddDays(400),
+                    ExpirationDate = DateTime.UtcNow.AddDays(400),
                     Manufacturer = "E1 Inc.",
                     ProductId = 2,
-                    PurchasedDate = DateTime.Now,
+                    PurchasedDate = DateTime.UtcNow,
                     Quantities = 66
                 },
                 new Batch
                 {
                     BatchId = 6,
                     Cost = 759.50,
-                    ExpirationDate = DateTime.Now.AddDays(100),
+                    ExpirationDate = DateTime.UtcNow.AddDays(100),
                     Manufacturer = "E1 Inc.",
                     ProductId = 2,
-                    PurchasedDate = DateTime.Now,
+                    PurchasedDate = DateTime.UtcNow,
                     Quantities = 80
                 },
                 new Batch
                 {
                     BatchId = 7,
                     Cost = 22.03,
-                    ExpirationDate = DateTime.Now.AddDays(200),
+                    ExpirationDate = DateTime.UtcNow.AddDays(200),
                     Manufacturer = "Bottle Inc",
                     ProductId = 3,
-                    PurchasedDate = DateTime.Now,
+                    PurchasedDate = DateTime.UtcNow,
                     Quantities = 500
                 },
                 new Batch
                 {
                     BatchId = 8,
                     Cost = 29.88,
-                    ExpirationDate = DateTime.Now.AddDays(400),
+                    ExpirationDate = DateTime.UtcNow.AddDays(400),
                     Manufacturer = "Bottle Inc",
                     ProductId = 3,
-                    PurchasedDate = DateTime.Now,
+                    PurchasedDate = DateTime.UtcNow,
                     Quantities = 20
                 },
                 new Batch
                 {
                     BatchId = 9,
                     Cost = 18.55,
-                    ExpirationDate = DateTime.Now.AddDays(100),
+                    ExpirationDate = DateTime.UtcNow.AddDays(100),
                     Manufacturer = "Bottle Inc",
                     ProductId = 3,
-                    PurchasedDate = DateTime.Now,
+                    PurchasedDate = DateTime.UtcNow,
                     Quantities = 50
                 }
                 );

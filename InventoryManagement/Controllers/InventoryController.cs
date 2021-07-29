@@ -27,10 +27,16 @@ namespace InventoryManagement.Controllers
         }
 
         [HttpGet("products/all", Name = "All Products")]
-        public async Task<IEnumerable> GetAllProducts()
+        public async Task<IEnumerable<ProductResponse>> GetAllProducts()
         {
             var allProductDto = await _productService.GetAllProducts();
             return _mapper.Map<IEnumerable<ProductResponse>>(allProductDto);
+        }
+        
+        [HttpGet("categories", Name = "All Categories")]
+        public async Task<IEnumerable<string>> GetAllCategories()
+        {
+            return await _productService.GetAllCategories();
         }
 
         [HttpGet("products/product/{id:int}", Name = "One Product")]
