@@ -2,7 +2,7 @@
 {
     public enum Categories
     {
-        Fashinon,
+        Fashion,
         Electronics,
         Home,
         Pet,

@@ -85,7 +85,7 @@ namespace InventoryManagement.Services
 
         public async Task<List<string>> GetAllCategories()
         {
-            return Enum.GetNames(typeof(Categories)).ToList();
+            return await Task.Run(() => Enum.GetNames(typeof(Categories)).ToList());
         }
     }
 }
