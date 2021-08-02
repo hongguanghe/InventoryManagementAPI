@@ -81,7 +81,7 @@ namespace InventoryManagement.Controllers
         }
 
         [HttpGet("products/product/search", Name = "Search Products")]
-        public async Task<IEnumerable<ProductResponse>> SearchProducts(string keyword, string category = null)
+        public async Task<IEnumerable<ProductResponse>> SearchProducts(string keyword, string category)
         {
             var result = await _productService.SearchProduct(keyword, category);
             return _mapper.Map<IEnumerable<ProductResponse>>(result);

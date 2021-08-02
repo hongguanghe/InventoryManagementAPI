@@ -90,40 +90,67 @@ namespace InventoryManagement.Services
         public async Task<IEnumerable<ProductDTO>> GetProductByCategory(string category)
         {
             var result = new List<Product>();
-            category = category.ToLower();
-            result.AddRange(await _db.Products.Where(p => p.Category.ToLower() == category).ToListAsync());
+
+            if (string.IsNullOrWhiteSpace(category))
+            {
+                result = await _db.Products.ToListAsync();
+            }
+            else
+            {
+                category = category.ToLower();
+                result.AddRange(await _db.Products.Where(p => p.Category.ToLower() == category).ToListAsync());
+            }
+
+            foreach (var product in result)
+            {
+                var associatedBatches = await _db.Batches.Where(p => p.ProductId == product.ProductId).ToListAsync();
+                product.Batches = associatedBatches;
+            }
             return _mapper.Map<IEnumerable<ProductDTO>>(result);
         }
         public async Task<IEnumerable<ProductDTO>> SearchProduct(string keyword = null, string category = null)
         {
             var result = new List<Product>();
 
-            if (string.IsNullOrEmpty(keyword))
+            if (string.IsNullOrWhiteSpace(keyword) && string.IsNullOrWhiteSpace(category))
             {
-                if (!string.IsNullOrEmpty(category))
+                result = await _db.Products.ToListAsync();
+            }
+            else
+            {
+                if (string.IsNullOrWhiteSpace(keyword))
                 {
-                    result.AddRange(await _db.Products.Where(p => p.Category.ToLower() == category).ToListAsync());
+                    if (!string.IsNullOrWhiteSpace(category))
+                    {
+                        result.AddRange(await _db.Products.Where(p => p.Category.ToLower() == category).ToListAsync());
+                    }
+                    return _mapper.Map<IEnumerable<ProductDTO>>(result);
                 }
-                return _mapper.Map<IEnumerable<ProductDTO>>(result);
-            }
 
-            keyword = keyword.ToLower();
-            if (!string.IsNullOrEmpty(category))
-            {
-                category = category.ToLower();
-                result.AddRange(await _db.Products.Where(p => p.Category == category).ToListAsync());
-                result = result.Where(p => 
-                    p.ProductId.ToString().Contains(keyword) 
+                keyword = keyword.ToLower();
+                if (!string.IsNullOrWhiteSpace(category))
+                {
+                    category = category.ToLower();
+                    result.AddRange(await _db.Products.Where(p => p.Category == category).ToListAsync());
+                    result = result.Where(p => 
+                        p.ProductId.ToString().Contains(keyword) 
+                        || p.Name.ToLower().Contains(keyword) 
+                        || p.Brand.ToLower().Contains(keyword)).ToList();
+                    return _mapper.Map<IEnumerable<ProductDTO>>(result.Distinct().ToList());
+                }
+                result.AddRange(await _db.Products.Where(p => 
+                    p.ProductId.ToString().Contains(keyword)
                     || p.Name.ToLower().Contains(keyword) 
-                    || p.Brand.ToLower().Contains(keyword)).ToList();
-                return _mapper.Map<IEnumerable<ProductDTO>>(result.Distinct().ToList());
+                    || p.Brand.ToLower().Contains(keyword)).ToListAsync());
             }
-            result.AddRange(await _db.Products.Where(p => 
-                p.ProductId.ToString().Contains(keyword)
-                || p.Name.ToLower().Contains(keyword) 
-                || p.Brand.ToLower().Contains(keyword)).ToListAsync());
-            return _mapper.Map<IEnumerable<ProductDTO>>(result.Distinct().ToList());
             
+            foreach (var product in result)
+            {
+                var associatedBatches = await _db.Batches.Where(p => p.ProductId == product.ProductId).ToListAsync();
+                product.Batches = associatedBatches;
+            }
+            
+            return _mapper.Map<IEnumerable<ProductDTO>>(result.Distinct().ToList());
         }
     }
 }
