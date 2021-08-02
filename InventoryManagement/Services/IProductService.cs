@@ -8,7 +8,7 @@ namespace InventoryManagement.Services
     {
         Task<IEnumerable<ProductDTO>> GetAllProducts();
         Task<IEnumerable<ProductDTO>> GetProductByCategory(string category);
-        Task<IEnumerable<ProductDTO>> SearchProduct(string keyword, string category = null);
+        Task<IEnumerable<ProductDTO>> SearchProduct(string keyword = null, string category = null);
         Task<ProductDTO> GetProductById(int id);
         Task<bool> ProductExistsById(int id);
         Task<bool> ProductExistsByName(string name);

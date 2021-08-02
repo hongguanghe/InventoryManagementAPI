@@ -94,11 +94,21 @@ namespace InventoryManagement.Services
             result.AddRange(await _db.Products.Where(p => p.Category.ToLower() == category).ToListAsync());
             return _mapper.Map<IEnumerable<ProductDTO>>(result);
         }
-        public async Task<IEnumerable<ProductDTO>> SearchProduct(string keyword, string category = null)
+        public async Task<IEnumerable<ProductDTO>> SearchProduct(string keyword = null, string category = null)
         {
             var result = new List<Product>();
+
+            if (string.IsNullOrEmpty(keyword))
+            {
+                if (!string.IsNullOrEmpty(category))
+                {
+                    result.AddRange(await _db.Products.Where(p => p.Category.ToLower() == category).ToListAsync());
+                }
+                return _mapper.Map<IEnumerable<ProductDTO>>(result);
+            }
+
             keyword = keyword.ToLower();
-            if (category != null)
+            if (!string.IsNullOrEmpty(category))
             {
                 category = category.ToLower();
                 result.AddRange(await _db.Products.Where(p => p.Category == category).ToListAsync());
@@ -108,12 +118,12 @@ namespace InventoryManagement.Services
                     || p.Brand.ToLower().Contains(keyword)).ToList();
                 return _mapper.Map<IEnumerable<ProductDTO>>(result.Distinct().ToList());
             }
-
             result.AddRange(await _db.Products.Where(p => 
                 p.ProductId.ToString().Contains(keyword)
                 || p.Name.ToLower().Contains(keyword) 
                 || p.Brand.ToLower().Contains(keyword)).ToListAsync());
             return _mapper.Map<IEnumerable<ProductDTO>>(result.Distinct().ToList());
+            
         }
     }
 }
