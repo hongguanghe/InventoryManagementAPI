@@ -79,7 +79,21 @@ namespace InventoryManagement.Controllers
             await _productService.DeleteProductById(id);
             return Ok();        
         }
-        
+
+        [HttpGet("products/product/search", Name = "Search Products")]
+        public async Task<IEnumerable<ProductResponse>> SearchProducts(string keyword, string category = null)
+        {
+            var result = await _productService.SearchProduct(keyword, category);
+            return _mapper.Map<IEnumerable<ProductResponse>>(result);
+        }
+
+        [HttpGet("products/product/category", Name = "Get Products by Category")]
+        public async Task<IEnumerable<ProductResponse>> GetProductsByCategory(string category)
+        {
+            var result = await _productService.GetProductByCategory(category);
+            return _mapper.Map<IEnumerable<ProductResponse>>(result);
+        }
+
         [HttpPost("products/product/create", Name ="Create Product")]
         public async Task<ActionResult> CreateProduct(ProductDTO productDto)
         {
